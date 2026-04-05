@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - FoodSaver</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">🍱 FoodSaver</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Student Login</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-card">
+            <h2>Student Login</h2>
+            <p>Enter your college credentials to manage your meals</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Register Number</label>
+                    <input type="text" id="regnum" placeholder="e.g. 2022CS001" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required />
+                </div>
+
+                <div id="error-msg" class="error-msg"></div>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <p class="admin-link">Are you an admin? <a href="admin.html">Login here</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 FoodSaver | Built for Social Welfare</p>
+    </footer>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const reg = document.getElementById('regnum').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            // Demo login check
+            if (reg === "2022CS001" && pass === "student123") {
+                window.location.href = "dashboard.html";
+            } else {
+                errorMsg.textContent = "Invalid register number or password!";
+            }
+        }
+    </script>
+
+</body>
+</html>

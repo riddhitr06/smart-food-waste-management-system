@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Dashboard - FoodSaver</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">🍱 FoodSaver</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">My Meals</a></li>
+            <li><a href="login.html" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Welcome Banner -->
+    <section class="welcome-banner">
+        <h2>Welcome, Student 👋</h2>
+        <p>Register No: <strong>2022CS001</strong></p>
+        <div class="cutoff-timer">
+            ⏰ Cutoff in: <span id="timer">--:--:--</span>
+        </div>
+    </section>
+
+    <!-- Meal Cards -->
+    <section class="meal-section">
+        <h3>Today's Meals</h3>
+        <div class="meal-cards">
+
+            <div class="meal-card" id="breakfast-card">
+                <div class="meal-icon">🌅</div>
+                <h4>Breakfast</h4>
+                <p>7:00 AM - 9:00 AM</p>
+                <button class="meal-btn eating" id="breakfast-btn" onclick="toggleMeal('breakfast')">
+                    ✅ Eating
+                </button>
+            </div>
+
+            <div class="meal-card" id="lunch-card">
+                <div class="meal-icon">☀️</div>
+                <h4>Lunch</h4>
+                <p>12:00 PM - 2:00 PM</p>
+                <button class="meal-btn eating" id="lunch-btn" onclick="toggleMeal('lunch')">
+                    ✅ Eating
+                </button>
+            </div>
+
+            <div class="meal-card" id="dinner-card">
+                <div class="meal-icon">🌙</div>
+                <h4>Dinner</h4>
+                <p>7:00 PM - 9:00 PM</p>
+                <button class="meal-btn eating" id="dinner-btn" onclick="toggleMeal('dinner')">
+                    ✅ Eating
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary-section">
+        <div class="summary-card">
+            <h4>This Month</h4>
+            <p>🍽️ Meals Skipped: <strong id="skipped-count">0</strong></p>
+            <p>💰 Money Saved: <strong id="money-saved">₹0</strong></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 FoodSaver | Built for Social Welfare</p>
+    </footer>
+
+    <script>
+        // Countdown timer to 9 PM cutoff
+        function updateTimer() {
+            const now = new Date();
+            const cutoff = new Date();
+            cutoff.setHours(21, 0, 0, 0);
+            if (now > cutoff) cutoff.setDate(cutoff.getDate() + 1);
+            const diff = cutoff - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('timer').textContent =
+                `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Meal toggle
+        let meals = { breakfast: true, lunch: true, dinner: true };
+        let skipped = 0;
+
+        function toggleMeal(meal) {
+            meals[meal] = !meals[meal];
+            const btn = document.getElementById(meal + '-btn');
+            const card = document.getElementById(meal + '-card');
+            if (meals[meal]) {
+                btn.textContent = '✅ Eating';
+                btn.className = 'meal-btn eating';
+                card.classList.remove('skipped');
+                skipped--;
+            } else {
+                btn.textContent = '❌ Skipping';
+                btn.className = 'meal-btn skipping';
+                card.classList.add('skipped');
+                skipped++;
+            }
+            skipped = Math.max(0, skipped);
+            document.getElementById('skipped-count').textContent = skipped;
+            document.getElementById('money-saved').textContent = '₹' + (skipped * 60);
+        }
+
+        function logout() {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+</html>
